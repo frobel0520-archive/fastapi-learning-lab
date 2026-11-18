@@ -29,7 +29,8 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - name: Dependency audit (high/critical fails)
-        run: pnpm audit --audit-level high
+        # 限期例外清單：security/audit-exceptions.json（到期自動恢復擋下）
+        run: node scripts/audit-gate.mjs pnpm
       - run: pnpm test:web
       - run: pnpm typecheck:web
       - run: pnpm build:web
